@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -56,3 +57,17 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+=======
+﻿# PentaThree
+    KELOMPOK 3 PBL TRPL2C
+
+MITRA   : Natasha Homestay dan Harau Souvernir
+
+Project Manager     :Zackri Kurnia Amri / 2411082023
+System Analyst      :Muhammad Aufi Syahyudi / 2411082027
+Lead Programmer     :Yelsa Pagansa Putri / 2411081027
+AI Specialist       :Zikri Ilham Pratama / 2411082026
+Quality Assurance   :Taufiqurrahman / 2411082022
+
+
+>>>>>>> a68697ca294753d59f896c975a642d0f1f29c048
