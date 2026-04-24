@@ -30,21 +30,10 @@ jobs:
           cp .env.example .env
           php artisan key:generate
 
-      - name: 🗄️ Setup SQLite database
-        run: |
-          mkdir -p database
-          touch database/database.sqlite
-
-      - name: 🗃️ Run migrations
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
-        run: php artisan migrate --force
-
       - name: ✅ Run tests (Pest)
         env:
           DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
+          DB_DATABASE: :memory:
         run: php artisan test
 
       - name: 🎨 Check code style (Laravel Pint)
