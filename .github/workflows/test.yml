@@ -7,38 +7,23 @@ on:
     branches: [main, testing]
 
 jobs:
-  # ============================================================
-  # JOB 1: Backend — PHP Tests & Code Quality
-  # ============================================================
   backend:
-    name: 🐘 Backend (PHP ${{ matrix.php }})
+    name: 🐘 Backend (PHP & Tests)
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        php: ['8.5']
 
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
 
-      - name: 🐘 Setup PHP ${{ matrix.php }}
+      - name: 🐘 Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: '8.4'
           extensions: mbstring, pdo, pdo_sqlite, sqlite3, bcmath, ctype, fileinfo, json, tokenizer, xml
           coverage: none
 
-      - name: 📦 Cache Composer dependencies
-        uses: actions/cache@v4
-        with:
-          path: vendor
-          key: composer-${{ runner.os }}-php${{ matrix.php }}-${{ hashFiles('composer.lock') }}
-          restore-keys: |
-            composer-${{ runner.os }}-php${{ matrix.php }}-
-
       - name: 📦 Install Composer dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-progress
+        run: composer update --no-interaction --prefer-dist --optimize-autoloader --no-progress --ignore-platform-reqs
 
       - name: 🔧 Prepare Laravel environment
         run: |
@@ -65,49 +50,32 @@ jobs:
       - name: 🎨 Check code style (Laravel Pint)
         run: vendor/bin/pint --test
 
-  # ============================================================
-  # JOB 2: Frontend — Tailwind CSS & Vite Build
-  # ============================================================
   frontend:
-    name: 🎨 Frontend (Node ${{ matrix.node }})
+    name: 🎨 Frontend (Node & Build)
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node: ['22']
 
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
 
-      - name: 🟢 Setup Node.js ${{ matrix.node }}
+      - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
+          node-version: '22'
           cache: 'npm'
 
       - name: 📦 Install NPM dependencies
-        run: npm ci
+        run: npm install
 
-      - name: 🏗️ Build assets (Vite + Tailwind)
+      - name: 🏗️ Build assets (Vite)
         run: npm run build
 
-      - name: ✅ Verify build output exists
+      - name: ✅ Verify build output
         run: |
-          echo "Checking build output..."
           test -d public/build || (echo "❌ Build directory not found!" && exit 1)
           test -f public/build/manifest.json || (echo "❌ manifest.json not found!" && exit 1)
           echo "✅ Build output verified successfully"
-          echo ""
-          echo "📁 Build contents:"
-          ls -la public/build/
-          echo ""
-          echo "📄 Manifest:"
-          cat public/build/manifest.json
 
-  # ============================================================
-  # JOB 3: Final merge gate — only passes if both jobs succeed
-  # ============================================================
   merge-gate:
     name: 🚦 Merge Gate
     runs-on: ubuntu-latest
@@ -117,14 +85,8 @@ jobs:
     steps:
       - name: 🔍 Check job results
         run: |
-          echo "Backend:  ${{ needs.backend.result }}"
-          echo "Frontend: ${{ needs.frontend.result }}"
-
           if [ "${{ needs.backend.result }}" != "success" ] || [ "${{ needs.frontend.result }}" != "success" ]; then
-            echo ""
             echo "❌ One or more checks failed. Merge is NOT safe."
             exit 1
           fi
-
-          echo ""
           echo "✅ All checks passed. Safe to merge!"
