@@ -13,6 +13,7 @@ Route::get('/dashboard', function () {
     if ($user->role === 'admin') {
         return redirect()->route('admin.dashboard');
     }
+
     return redirect()->route('user.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
