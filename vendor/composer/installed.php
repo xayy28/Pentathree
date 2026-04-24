@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '20ab9e63f86c28d8094106980e57acd02ce80911',
+        'reference' => '76081c6101fc3009a3eba2ebf8898e94ecc8821e',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -424,6 +424,15 @@
                 0 => '*',
             ),
         ),
+        'laravel/breeze' => array(
+            'pretty_version' => 'v2.4.1',
+            'version' => '2.4.1.0',
+            'reference' => '28cefeaf6af20177ddf5cc7b93e87e4ad79d533f',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravel/breeze',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
         'laravel/framework' => array(
             'pretty_version' => 'v13.6.0',
             'version' => '13.6.0.0',
@@ -436,7 +445,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '20ab9e63f86c28d8094106980e57acd02ce80911',
+            'reference' => '76081c6101fc3009a3eba2ebf8898e94ecc8821e',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
